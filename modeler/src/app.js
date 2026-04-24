@@ -3,6 +3,10 @@ import "bpmn-js/dist/assets/bpmn-js.css";
 
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import CustomPaletteProvider from "./custom/CustomPaletteProvider";
+import TextToolPaletteProvider from './custom/TextToolPaletteProvider';
+import TextRenderer from './custom/TextRenderer';
+import TextContextPadProvider from './custom/TextContextPadProvider';
+import TextRules from './custom/TextRules';
 
 import "./style.css";
 
@@ -18,9 +22,17 @@ var modeler = new BpmnModeler({
   container: "#js-canvas",
   additionalModules: [
     {
-      __init__: ["customPalette"],
-      customPalette: ["type", CustomPaletteProvider],
-    },
+      __init__: [
+        'textPalette',
+        'customTextRenderer',
+        'textContextPad',
+        'textRules'
+      ],
+      textPalette: ['type', TextToolPaletteProvider],
+      customTextRenderer: ['type', TextRenderer],
+      textContextPad: ['type', TextContextPadProvider],
+      textRules: ['type', TextRules]
+    }
   ],
 });
 
