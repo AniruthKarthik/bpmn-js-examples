@@ -15,8 +15,7 @@ export default class TextPaletteProvider {
 
     function createText(event) {
       const shape = _elementFactory.createShape({
-        type: 'bpmn:TextAnnotation',
-        isCustomText: true
+        type: 'custom:Text'
       });
 
       _create.start(event, shape);

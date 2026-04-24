@@ -14,6 +14,7 @@ import $ from "jquery";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 
 import diagramXML from "../resources/newDiagram.bpmn";
+import customTextModdle from './custom/custom-text.json';
 
 var container = $("#js-drop-zone");
 
@@ -33,6 +34,9 @@ var modeler = new BpmnModeler({
       customTextRules: ['type', TextRules]
     }
   ],
+  moddleExtensions: {
+    customText: customTextModdle
+  }
 });
 
 function createNewDiagram() {

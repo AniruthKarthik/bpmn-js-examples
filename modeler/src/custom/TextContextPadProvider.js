@@ -34,7 +34,7 @@ export default class TextContextPadProvider {
       _popupMenu
     } = this;
 
-    if (element.type !== 'bpmn:TextAnnotation') {
+    if (element.type !== 'custom:Text' && element.type !== 'bpmn:TextAnnotation') {
       return {};
     }
 

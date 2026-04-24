@@ -11,8 +11,7 @@ export default class TextRenderer extends BaseRenderer {
   }
 
   canRender(element) {
-    // Only render if it's a TextAnnotation AND marked as custom text
-    return element.type === 'bpmn:TextAnnotation' && element.isCustomText;
+    return element.type === 'custom:Text';
   }
 
   drawShape(parentNode, element) {

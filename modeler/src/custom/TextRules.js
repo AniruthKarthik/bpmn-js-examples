@@ -10,11 +10,11 @@ export default class TextRules extends RuleProvider {
       const source = context.source,
             target = context.target;
 
-      if (source && source.type === 'bpmn:TextAnnotation') {
+      if (source && (source.type === 'bpmn:TextAnnotation' || source.type === 'custom:Text')) {
         return true;
       }
 
-      if (target && target.type === 'bpmn:TextAnnotation') {
+      if (target && (target.type === 'bpmn:TextAnnotation' || target.type === 'custom:Text')) {
         return true;
       }
     });
@@ -23,11 +23,11 @@ export default class TextRules extends RuleProvider {
       const source = context.source,
             target = context.target;
 
-      if (source && source.type === 'bpmn:TextAnnotation') {
+      if (source && (source.type === 'bpmn:TextAnnotation' || source.type === 'custom:Text')) {
         return true;
       }
 
-      if (target && target.type === 'bpmn:TextAnnotation') {
+      if (target && (target.type === 'bpmn:TextAnnotation' || target.type === 'custom:Text')) {
         return true;
       }
     });
@@ -35,7 +35,7 @@ export default class TextRules extends RuleProvider {
     this.addRule('shape.append', function(context) {
       const source = context.source;
 
-      if (source && source.type === 'bpmn:TextAnnotation') {
+      if (source && (source.type === 'bpmn:TextAnnotation' || source.type === 'custom:Text')) {
         return true;
       }
     });

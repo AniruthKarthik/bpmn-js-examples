@@ -1,0 +1,14 @@
+{
+  "name": "CustomText",
+  "uri": "http://custom/text",
+  "prefix": "custom",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "Text",
+      "superClass": [ "bpmn:TextAnnotation" ]
+    }
+  ]
+}
