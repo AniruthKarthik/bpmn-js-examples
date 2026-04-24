@@ -2,7 +2,7 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-js.css";
 
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-import TextToolPaletteProvider from './custom/TextToolPaletteProvider';
+import TextPaletteProvider from './custom/TextPaletteProvider';
 import TextRenderer from './custom/TextRenderer';
 import TextContextPadProvider from './custom/TextContextPadProvider';
 import TextRules from './custom/TextRules';
@@ -22,15 +22,15 @@ var modeler = new BpmnModeler({
   additionalModules: [
     {
       __init__: [
-        'textPalette',
+        'customTextPalette',
         'customTextRenderer',
-        'textContextPad',
-        'textRules'
+        'customTextContextPad',
+        'customTextRules'
       ],
-      textPalette: ['type', TextToolPaletteProvider],
+      customTextPalette: ['type', TextPaletteProvider],
       customTextRenderer: ['type', TextRenderer],
-      textContextPad: ['type', TextContextPadProvider],
-      textRules: ['type', TextRules]
+      customTextContextPad: ['type', TextContextPadProvider],
+      customTextRules: ['type', TextRules]
     }
   ],
 });

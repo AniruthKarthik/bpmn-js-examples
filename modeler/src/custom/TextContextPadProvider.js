@@ -1,3 +1,6 @@
+/**
+ * A context pad provider to manage hover actions for elements.
+ */
 export default class TextContextPadProvider {
   constructor(
     contextPad,
@@ -11,24 +14,24 @@ export default class TextContextPadProvider {
   ) {
     contextPad.registerProvider(this);
 
-    this.modeling = modeling;
-    this.elementFactory = elementFactory;
-    this.connect = connect;
-    this.create = create;
-    this.translate = translate;
-    this.autoPlace = autoPlace;
-    this.popupMenu = popupMenu;
+    this._modeling = modeling;
+    this._elementFactory = elementFactory;
+    this._connect = connect;
+    this._create = create;
+    this._translate = translate;
+    this._autoPlace = autoPlace;
+    this._popupMenu = popupMenu;
   }
 
   getContextPadEntries(element) {
     const {
-      modeling,
-      elementFactory,
-      connect,
-      create,
-      translate,
-      autoPlace,
-      popupMenu
+      _modeling,
+      _elementFactory,
+      _connect,
+      _create,
+      _translate,
+      _autoPlace,
+      _popupMenu
     } = this;
 
     if (element.type !== 'bpmn:TextAnnotation') {
@@ -37,24 +40,24 @@ export default class TextContextPadProvider {
 
     function appendAction(type, className, title, options) {
       function append(event, element) {
-        var shape = elementFactory.createShape(Object.assign({ type: type }, options));
+        var shape = _elementFactory.createShape(Object.assign({ type: type }, options));
         
-        if (autoPlace) {
-          autoPlace.append(element, shape);
+        if (_autoPlace) {
+          _autoPlace.append(element, shape);
         } else {
-          create.start(event, shape, { source: element });
+          _create.start(event, shape, { source: element });
         }
       }
 
       function appendDrag(event, element) {
-        var shape = elementFactory.createShape(Object.assign({ type: type }, options));
-        create.start(event, shape, { source: element });
+        var shape = _elementFactory.createShape(Object.assign({ type: type }, options));
+        _create.start(event, shape, { source: element });
       }
 
       return {
         group: 'model',
         className: className,
-        title: translate(title),
+        title: _translate(title),
         action: {
           dragstart: appendDrag,
           click: append
@@ -63,14 +66,14 @@ export default class TextContextPadProvider {
     }
 
     function startConnect(event, element) {
-      connect.start(event, element);
+      _connect.start(event, element);
     }
 
     function removeElement(event, element) {
-      modeling.removeElements([element]);
+      _modeling.removeElements([element]);
     }
 
-    const entries = {
+    return {
       'append.end-event': appendAction('bpmn:EndEvent', 'bpmn-icon-end-event-none', 'Append EndEvent'),
       'append.gateway': appendAction('bpmn:ExclusiveGateway', 'bpmn-icon-gateway-xor', 'Append Gateway'),
       'append.task': appendAction('bpmn:Task', 'bpmn-icon-task', 'Append Task'),
@@ -80,7 +83,7 @@ export default class TextContextPadProvider {
       'connect': {
         group: 'connect',
         className: 'bpmn-icon-connection',
-        title: translate('Connect'),
+        title: _translate('Connect'),
         action: {
           click: startConnect,
           dragstart: startConnect
@@ -89,10 +92,10 @@ export default class TextContextPadProvider {
       'replace': {
         group: 'edit',
         className: 'bpmn-icon-screw-wrench',
-        title: translate('Change type'),
+        title: _translate('Change type'),
         action: {
           click: function(event, element) {
-            popupMenu.open(element, 'bpmn-replace', {
+            _popupMenu.open(element, 'bpmn-replace', {
               cursor: { x: event.x, y: event.y }
             });
           }
@@ -101,14 +104,12 @@ export default class TextContextPadProvider {
       'delete': {
         group: 'edit',
         className: 'bpmn-icon-trash',
-        title: translate('Delete'),
+        title: _translate('Delete'),
         action: {
           click: removeElement
         }
       }
     };
-
-    return entries;
   }
 }
 

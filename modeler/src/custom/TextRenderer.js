@@ -2,28 +2,32 @@ import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer';
 
 const HIGH_PRIORITY = 2000;
 
+/**
+ * A renderer for custom "Text" shapes that removes the default BPMN bracket.
+ */
 export default class TextRenderer extends BaseRenderer {
-  constructor(eventBus, textRenderer) {
+  constructor(eventBus) {
     super(eventBus, HIGH_PRIORITY);
-
-    this.textRenderer = textRenderer;
   }
 
   canRender(element) {
-    return element.type === 'bpmn:TextAnnotation';
+    // Only render if it's a TextAnnotation AND marked as custom text
+    return element.type === 'bpmn:TextAnnotation' && element.isCustomText;
   }
 
   drawShape(parentNode, element) {
     const text = element.businessObject.text;
-
-    // Create a container for our custom rendering
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
+    // Default dimensions if missing
+    const width = element.width || 100;
+    const height = element.height || 30;
+
     if (!text || text === 'Text') {
-      // Draw a large centered "T" for preview and empty state
+      // Draw a centered placeholder "T" for preview and initial state
       const tSymbol = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      tSymbol.setAttribute('x', element.width / 2);
-      tSymbol.setAttribute('y', element.height / 2 + 10);
+      tSymbol.setAttribute('x', width / 2);
+      tSymbol.setAttribute('y', height / 2 + 10);
       tSymbol.setAttribute('font-size', '40');
       tSymbol.setAttribute('font-family', 'Arial, sans-serif');
       tSymbol.setAttribute('font-weight', 'bold');
@@ -32,21 +36,21 @@ export default class TextRenderer extends BaseRenderer {
       tSymbol.textContent = 'T';
       g.appendChild(tSymbol);
     } else {
-      // Draw actual text if it exists
-      const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      textEl.setAttribute('x', 5);
-      textEl.setAttribute('y', 20);
-      textEl.setAttribute('font-size', '14');
-      textEl.setAttribute('fill', 'black');
+      // Render the actual user-provided text as plain text
+      const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      textElement.setAttribute('x', 5);
+      textElement.setAttribute('y', 20);
+      textElement.setAttribute('font-size', '14');
+      textElement.setAttribute('fill', 'black');
 
       text.split('\n').forEach((line, index) => {
         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
         tspan.setAttribute('x', 5);
         tspan.setAttribute('dy', index === 0 ? 0 : 18);
         tspan.textContent = line;
-        textEl.appendChild(tspan);
+        textElement.appendChild(tspan);
       });
-      g.appendChild(textEl);
+      g.appendChild(textElement);
     }
 
     parentNode.appendChild(g);
@@ -55,4 +59,4 @@ export default class TextRenderer extends BaseRenderer {
   }
 }
 
-TextRenderer.$inject = ['eventBus', 'textRenderer'];
+TextRenderer.$inject = ['eventBus'];
