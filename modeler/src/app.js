@@ -2,7 +2,6 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-js.css";
 
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-import CustomPaletteProvider from "./custom/CustomPaletteProvider";
 import TextToolPaletteProvider from './custom/TextToolPaletteProvider';
 import TextRenderer from './custom/TextRenderer';
 import TextContextPadProvider from './custom/TextContextPadProvider';

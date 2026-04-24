@@ -19,7 +19,7 @@ export default function TextToolPaletteProvider(
     return {
       'create.text': {
         group: 'artifact',
-        className: 'bpmn-icon-text-annotation',
+        className: 'bpmn-icon-text',
         title: translate('Create Text'),
         action: {
           dragstart: createText,
