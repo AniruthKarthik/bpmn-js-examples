@@ -96,13 +96,19 @@ a:link {
   opacity: 1.0;
 }
 
+.djs-palette .entry.custom-text-tool {
+  position: relative;
+}
+
 .djs-palette .entry.custom-text-tool::before {
   content: 'T';
-  display: block;
-  width: 100%;
-  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #222;
   font-family: Georgia, serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 1;
+  transform: translate(-50%, -52%);
 }

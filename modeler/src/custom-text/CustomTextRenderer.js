@@ -43,7 +43,8 @@ CustomTextRenderer.prototype.drawShape = function(parentGfx, element) {
     y: 0,
     width: element.width,
     height: element.height,
-    fill: 'none',
+    fill: '#fff',
+    fillOpacity: 0,
     stroke: 'none'
   });
 
@@ -66,7 +67,7 @@ CustomTextRenderer.prototype.drawShape = function(parentGfx, element) {
 
   svgAppend(parentGfx, text);
 
-  return text;
+  return hit;
 };
 
 CustomTextRenderer.prototype.getShapePath = function(shape) {

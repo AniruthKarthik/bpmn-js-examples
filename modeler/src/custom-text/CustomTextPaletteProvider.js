@@ -37,10 +37,6 @@ CustomTextPaletteProvider.prototype.getPaletteEntries = function() {
   }
 
   return {
-    'create.custom-text-separator': {
-      group: 'custom',
-      separator: true
-    },
     'create.custom-text': {
       group: 'custom',
       className: 'custom-text-tool',
