@@ -97,7 +97,7 @@ CustomTextLabelEditingProvider.prototype.getEditingBBox = function(element) {
       fontWeight: defaultStyle.fontWeight,
       fontSize: fontSize + 'px',
       lineHeight: lineHeight,
-      textAlign: 'center',
+      textAlign: 'left',
       backgroundColor: null,
       border: null,
       paddingTop: '0px',

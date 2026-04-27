@@ -50,22 +50,38 @@ CustomTextRenderer.prototype.drawShape = function(parentGfx, element) {
 
   svgAppend(parentGfx, hit);
 
-  var text = this._textRenderer.createText(getCustomText(element), {
-    box: {
-      x: 0,
-      y: 0,
-      width: element.width,
-      height: element.height
-    },
-    align: 'center-middle',
-    padding: 0,
-    style: {
-      fontSize: 16,
-      fontWeight: 'normal'
-    }
+  var foreignObject = svgCreate('foreignObject');
+
+  svgAttr(foreignObject, {
+    x: 0,
+    y: 0,
+    width: element.width,
+    height: element.height
   });
 
-  svgAppend(parentGfx, text);
+  var textContainer = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+
+  textContainer.style.width = element.width + 'px';
+  textContainer.style.height = element.height + 'px';
+  textContainer.style.display = 'flex';
+  textContainer.style.alignItems = 'stretch';
+  textContainer.style.justifyContent = 'stretch';
+  textContainer.style.fontFamily = this._textRenderer.getDefaultStyle().fontFamily;
+  textContainer.style.fontSize = '16px';
+  textContainer.style.fontWeight = '400';
+  textContainer.style.lineHeight = '1.35';
+  textContainer.style.color = '#222';
+  textContainer.style.whiteSpace = 'pre-wrap';
+  textContainer.style.wordBreak = 'break-word';
+  textContainer.style.overflowWrap = 'anywhere';
+  textContainer.style.textAlign = 'left';
+  textContainer.style.padding = '0';
+  textContainer.style.margin = '0';
+  textContainer.textContent = getCustomText(element);
+
+  foreignObject.appendChild(textContainer);
+
+  svgAppend(parentGfx, foreignObject);
 
   return hit;
 };

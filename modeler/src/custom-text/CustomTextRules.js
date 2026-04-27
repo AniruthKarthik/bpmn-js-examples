@@ -36,6 +36,21 @@ CustomTextRules.prototype.init = function() {
 
     return { type: 'bpmn:SequenceFlow' };
   });
+
+  this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
+    var shape = context.shape,
+        newBounds = context.newBounds;
+
+    if (!isCustomText(shape)) {
+      return;
+    }
+
+    if (!newBounds) {
+      return true;
+    }
+
+    return newBounds.width >= 80 && newBounds.height >= 36;
+  });
 };
 
 function isTextFlowConnection(source, target) {
