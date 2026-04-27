@@ -1,0 +1,19 @@
+{
+  "name": "Custom",
+  "uri": "http://bpmn.io/schema/bpmn/custom",
+  "prefix": "custom",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "Text",
+      "superClass": [
+        "bpmn:FlowNode"
+      ],
+      "properties": []
+    }
+  ],
+  "emumerations": [],
+  "associations": []
+}

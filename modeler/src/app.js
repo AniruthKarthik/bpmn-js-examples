@@ -10,12 +10,21 @@ import $ from 'jquery';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 
 import diagramXML from '../resources/newDiagram.bpmn';
+import customPackage from '../resources/custom.json';
+
+import customTextModule from './custom-text';
 
 
 var container = $('#js-drop-zone');
 
 var modeler = new BpmnModeler({
   container: '#js-canvas',
+  additionalModules: [
+    customTextModule
+  ],
+  moddleExtensions: {
+    custom: customPackage
+  }
 });
 
 function createNewDiagram() {

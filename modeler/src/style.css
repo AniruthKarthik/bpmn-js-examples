@@ -95,3 +95,14 @@ a:link {
 .buttons a.active {
   opacity: 1.0;
 }
+
+.djs-palette .entry.custom-text-tool::before {
+  content: 'T';
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 30px;
+}
