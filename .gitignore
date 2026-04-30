@@ -2,6 +2,7 @@ node_modules/
 public/
 dist/
 .idea
+.codex
 *.iml
 .DS_Store
 npm-debug.log
