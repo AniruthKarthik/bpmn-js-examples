@@ -12,6 +12,19 @@
         "bpmn:FlowNode"
       ],
       "properties": []
+    },
+    {
+      "name": "Image",
+      "superClass": [
+        "bpmn:FlowNode"
+      ],
+      "properties": [
+        {
+          "name": "url",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
     }
   ],
   "emumerations": [],

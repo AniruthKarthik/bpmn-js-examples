@@ -112,3 +112,22 @@ a:link {
   line-height: 1;
   transform: translate(-50%, -52%);
 }
+
+.djs-palette .entry.custom-image-tool {
+  position: relative;
+}
+
+.djs-palette .entry.custom-image-tool::before {
+  content: 'IMG';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #222;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid #222;
+  padding: 1px;
+}

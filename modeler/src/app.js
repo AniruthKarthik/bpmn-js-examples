@@ -9,10 +9,19 @@ import $ from 'jquery';
 
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 
+import {
+  assign
+} from 'min-dash';
+
 import diagramXML from '../resources/newDiagram.bpmn';
 import customPackage from '../resources/custom.json';
 
 import customTextModule from './custom-text';
+import customImageModule from './custom-image';
+
+import {
+  DEFAULT_IMAGE_SIZE
+} from './custom-image/CustomImageUtil';
 
 
 var container = $('#js-drop-zone');
@@ -20,7 +29,8 @@ var container = $('#js-drop-zone');
 var modeler = new BpmnModeler({
   container: '#js-canvas',
   additionalModules: [
-    customTextModule
+    customTextModule,
+    customImageModule
   ],
   moddleExtensions: {
     custom: customPackage
@@ -62,16 +72,34 @@ function registerFileDrop(container, callback) {
 
     var file = files[0];
 
+    if (!file) {
+      return;
+    }
+
     var reader = new FileReader();
 
-    reader.onload = function(e) {
+    if (file.type.startsWith('image/')) {
+      reader.onload = function(e) {
+        var url = e.target.result;
 
-      var xml = e.target.result;
+        var position = modeler.get('canvas')._relativePos({
+          x: e.clientX || files.clientX || 0,
+          y: e.clientY || files.clientY || 0
+        });
 
-      callback(xml);
-    };
+        createImage(url, position);
+      };
 
-    reader.readAsText(file);
+      reader.readAsDataURL(file);
+    } else {
+      reader.onload = function(e) {
+        var xml = e.target.result;
+
+        callback(xml);
+      };
+
+      reader.readAsText(file);
+    }
   }
 
   function handleDragOver(e) {
@@ -84,6 +112,48 @@ function registerFileDrop(container, callback) {
   container.get(0).addEventListener('dragover', handleDragOver, false);
   container.get(0).addEventListener('drop', handleFileSelect, false);
 }
+
+function createImage(url, position) {
+  var modeling = modeler.get('modeling'),
+      canvas = modeler.get('canvas'),
+      elementFactory = modeler.get('elementFactory'),
+      bpmnFactory = modeler.get('bpmnFactory');
+
+  var parent = canvas.getRootElement();
+
+  var businessObject = bpmnFactory.create('custom:Image', {
+    url: url
+  });
+
+  var shape = elementFactory.createShape(assign({
+    type: 'custom:Image',
+    businessObject: businessObject
+  }, DEFAULT_IMAGE_SIZE));
+
+  modeling.createShape(shape, position || { x: 150, y: 150 }, parent);
+}
+
+window.addEventListener('paste', function(e) {
+  var items = (e.clipboardData || e.originalEvent.clipboardData).items;
+
+  for (var index in items) {
+    var item = items[index];
+
+    if (item.kind === 'file' && item.type.startsWith('image/')) {
+      var blob = item.getAsFile();
+
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var url = e.target.result;
+
+        createImage(url);
+      };
+
+      reader.readAsDataURL(blob);
+    }
+  }
+});
 
 
 // file drag / drop ///////////////////////

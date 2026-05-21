@@ -38,7 +38,7 @@ CustomTextPaletteProvider.prototype.getPaletteEntries = function() {
 
   return {
     'create.custom-text': {
-      group: 'custom',
+      group: 'create',
       className: 'custom-text-tool',
       title: translate('Create text'),
       action: {

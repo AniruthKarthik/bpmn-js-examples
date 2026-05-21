@@ -12,6 +12,10 @@ import {
   isCustomText
 } from './CustomTextUtil';
 
+import {
+  isCustomImage
+} from '../custom-image/CustomImageUtil';
+
 export default function CustomTextLabelEditingProvider(
     eventBus, bpmnFactory, canvas, directEditing,
     modeling, resizeHandles, textRenderer) {
@@ -55,6 +59,10 @@ inherits(CustomTextLabelEditingProvider, LabelEditingProvider);
 CustomTextLabelEditingProvider.$inject = LabelEditingProvider.$inject;
 
 CustomTextLabelEditingProvider.prototype.activate = function(element) {
+  if (isCustomImage(element)) {
+    return;
+  }
+
   if (!isCustomText(element)) {
     return LabelEditingProvider.prototype.activate.call(this, element);
   }
